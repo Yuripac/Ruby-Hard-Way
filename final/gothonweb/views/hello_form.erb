@@ -1,0 +1,16 @@
+<h1>Fill Out This Form</h1>
+
+<!-- Says where to deliver this form. In this case it's to action="/hello/"
+ -->
+<form action="/hello/" method="POST">
+	<!-- 
+	name = parameters
+ 	These parameters are mapped in our "post '/hello/'" code to create the 'greeting' and 'name'
+	variables while get passed as :locals to the erb ":index" call.
+	-->
+	A Greeting: <input type="text" name="greeting">
+	<br/>
+	Your Name: <input type="text" name="name">
+	<br/>
+	<input type="submit">
+</form>
