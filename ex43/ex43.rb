@@ -208,12 +208,12 @@ end
 
 class Map
   @@scenes = {
-    'central_corridor' => CentralCorridor.new(),
+    'central_corridor'    => CentralCorridor.new(),
     'laser_weapon_armory' => LaserWeaponArmory.new(),
-    'the_bridge' => TheBridge.new(),
-    'escape_pod' => EscapePod.new(),
-    'death' => Death.new(),
-    'finished' => Finished.new()
+    'the_bridge'          => TheBridge.new(),
+    'escape_pod'          => EscapePod.new(),
+    'death'               => Death.new(),
+    'finished'            => Finished.new()
   }
 
   def initialize( start_scene)

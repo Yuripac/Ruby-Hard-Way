@@ -25,5 +25,6 @@ class MyAppTest < Test::Unit::TestCase
 		assert last_response.ok?
 		assert last_response.body.include?('I just wanted to say')
 	end
+	
 
 end
