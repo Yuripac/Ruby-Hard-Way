@@ -119,8 +119,15 @@ module Map
     '2' => THE_END_WINNER,
   '*' => THE_END_LOSER
   })
+  
+  DEATH_PHRASES = [
+    "You died. You kinda suck at this",
+    "Your mom would be proud... if she were smarter.",
+    "Such a luser.",
+    "I gave a small puppy that's better at this."
+  ]
 
-  GENERIC_DEATH = Room.new("death", "You died.")
+  GENERIC_DEATH = Room.new("death", DEATH_PHRASES.sample)
 
   THE_BRIDGE.add_paths({
     'throw the bomb' => GENERIC_DEATH,
