@@ -114,12 +114,7 @@ module Map
   )
 
   #----------------ESPECIFICANDO OS CAMINHOS--------
-  
-  ESCAPE_POD.add_paths({
-    '2' => THE_END_WINNER,
-  '*' => THE_END_LOSER
-  })
-  
+
   DEATH_PHRASES = [
     "You died. You kinda suck at this",
     "Your mom would be proud... if she were smarter.",
@@ -129,20 +124,27 @@ module Map
 
   GENERIC_DEATH = Room.new("death", DEATH_PHRASES.sample)
 
-  THE_BRIDGE.add_paths({
-    'throw the bomb' => GENERIC_DEATH,
-    'slowly place the bomb' => ESCAPE_POD 
+  ESCAPE_POD.add_paths({
+    '2' => THE_END_WINNER,
+
+    #ESTUDE O ASTERISCO, RETORNA 'THE_END_LOSER' PARA TODAS  AS RESPOSTAS DIFERENTES DE '2' 
+    '*' => THE_END_LOSER
   })
 
-  LASER_WEAPOM_ARMORY.add_paths({
+  THE_BRIDGE.add_paths({
+    'throw the bomb'        => GENERIC_DEATH,
+    'slowly place the bomb' => ESCAPE_POD,
+  })
+
+  LASER_WEAPON_ARMORY.add_paths({
     '0132' => THE_BRIDGE,
-    '*' => GENERIC_DEATH
+    '*'    => GENERIC_DEATH
   })
 
   CENTRAL_CORRIDOR.add_paths({
-    'shoot!' => GENERIC_DEATH,
-    'dodge!' => GENERIC_DEATH,
-    'tell a joke' => LASER_WEAPOM_ARMORY
+    'shoot!'      => GENERIC_DEATH,
+    'dodge!'      => GENERIC_DEATH,
+    'tell a joke' => LASER_WEAPON_ARMORY
   })
 
   START = CENTRAL_CORRIDOR
@@ -156,12 +158,12 @@ module Map
 
   ROOM_NAMES = {
     'CENTRAL_CORRIDOR'    => CENTRAL_CORRIDOR,
-    'LASER_WEAPON_ARMORY' => LASER_WEAPOM_ARMORY,
+    'LASER_WEAPON_ARMORY' => LASER_WEAPON_ARMORY,
     'THE_BRIDGE'          => THE_BRIDGE,
     'ESCAPE_POD'          => ESCAPE_POD,
     'THE_END_WINNER'      => THE_END_WINNER,
     'THE_END_LOSER'       => THE_END_LOSER,
-    'START'         => START
+    'START'               => START
   }
 
   def Map::load_room(session)
