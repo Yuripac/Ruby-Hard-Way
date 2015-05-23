@@ -19,7 +19,7 @@ get '/game' do
 	if room
 		erb :show_room, :locals => {:room => room}
 	else
-		erb :you_died
+		redirect to('/')
 	end
 end
 
@@ -27,12 +27,15 @@ post '/game' do
 	room = Map::load_room(session)
 	action = params[:action]
 	
-	if room
-		next_room = room.go(action) || room.go('*')
-		Map::save_room(session, next_room) if next_room
+	next_room = room.go(action) || room.go('*')
+
+	if next_room
+		Map::save_room(session, next_room)
 		
-		redirect to('/game')
-	else
-		erb :you_died
+		if next_room.name == 'death'
+			return erb :you_died, :locals => {:room => next_room}
+		end
 	end
+
+	redirect to('/game')
 end
