@@ -1,30 +1,38 @@
 require 'sinatra'
+require './lib/gothonweb/map.rb'
 
 set :port, 8080
 set :static, true
 set :public_folder, "static"
 set :views, "views"
+enable :sessions
+set :session_secret, 'BADSECRET'
 
-#localhost:8080/
 get '/' do 
-	return 'Hello world'
+	session[:room] = 'START'
+	redirect to('/game')
 end
 
-#Routes are matched in the order they are defined.
-#localhost:8080/hello/
+get '/game' do
+	room = Map::load_room(session)
 
-get '/hello/' do
-	erb :hello_form
+	if room
+		erb :show_room, :locals => {:room => room}
+	else
+		erb :you_died
+	end
 end
 
-#localhost:8080/hello/
-post '/hello/' do
-	params[:greeting] = nil if params[:greeting] == ""
-	params[:name] = nil if params[:name] == ""
-
-	greeting = params[:greeting] || "Hi There"
-	name = params[:name] || "Nobody"
-
-	# locals send the variables to the view
-	erb :index, :locals => {:greeting => greeting, :name => name}
+post '/game' do
+	room = Map::load_room(session)
+	action = params[:action]
+	
+	if room
+		next_room = room.go(action) || room.go('*')
+		Map::save_room(session, next_room) if next_room
+		
+		redirect to('/game')
+	else
+		erb :you_died
+	end
 end
