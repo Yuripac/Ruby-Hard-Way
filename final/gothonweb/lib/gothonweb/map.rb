@@ -21,7 +21,7 @@ module Map
       @paths.update(paths)
     end
 
-  end    
+  end
 
   CENTRAL_CORRIDOR = Room.new("Central Corridor",
   """
@@ -113,8 +113,6 @@ module Map
   """
   )
 
-  #----------------ESPECIFICANDO OS CAMINHOS--------
-
   DEATH_PHRASES = [
     "You died. You kinda suck at this",
     "Your mom would be proud... if she were smarter.",
@@ -122,29 +120,31 @@ module Map
     "I gave a small puppy that's better at this."
   ]
 
-  GENERIC_DEATH = Room.new("death", DEATH_PHRASES.sample)
+
+  # Description receives a array
+  DEATH = Room.new('death', DEATH_PHRASES)
+
+  #----------------ESPECIFICANDO OS CAMINHOS--------
 
   ESCAPE_POD.add_paths({
     '2' => THE_END_WINNER,
-
-    #ESTUDE O ASTERISCO, RETORNA 'THE_END_LOSER' PARA TODAS  AS RESPOSTAS DIFERENTES DE '2' 
     '*' => THE_END_LOSER
   })
 
   THE_BRIDGE.add_paths({
-    'throw the bomb'        => GENERIC_DEATH,
-    'slowly place the bomb' => ESCAPE_POD,
+    'throw the bomb'        => DEATH,
+    'slowly place the bomb' => ESCAPE_POD
   })
 
   LASER_WEAPON_ARMORY.add_paths({
     '0132' => THE_BRIDGE,
-    '*'    => GENERIC_DEATH
+    '*'    => DEATH
   })
 
   CENTRAL_CORRIDOR.add_paths({
-    'shoot!'      => GENERIC_DEATH,
-    'dodge!'      => GENERIC_DEATH,
-    'tell a joke' => LASER_WEAPON_ARMORY
+    'shoot!'      => DEATH,
+    'dodge!'      => DEATH,
+    'tell a joke' => LASER_WEAPON_ARMORY,
   })
 
   START = CENTRAL_CORRIDOR
@@ -175,4 +175,5 @@ module Map
     # Store the room in the session for later, using its name
     session[:room] = ROOM_NAMES.key(room)
   end
+
 end
