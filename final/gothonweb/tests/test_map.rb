@@ -36,8 +36,8 @@ class TestGame < Test::Unit::TestCase
     end
 
     def test_gothon_game_map()
-        assert_equal(Map::START.go('shoot!'), Map::GENERIC_DEATH)
-        assert_equal(Map::START.go('dodge!'), Map::GENERIC_DEATH)
+        assert_equal(Map::START.go('shoot!'), Map::DEATH)
+        assert_equal(Map::START.go('dodge!'), Map::DEATH)
 
         room = Map::START.go('tell a joke')
         assert_equal(room, Map::LASER_WEAPON_ARMORY)
@@ -60,5 +60,15 @@ class TestGame < Test::Unit::TestCase
 
         Map::save_room(session, room)
         assert_equal(room, Map::LASER_WEAPON_ARMORY)
+    end
+
+    def test_death_room()
+        room = Map::CENTRAL_CORRIDOR
+        room = room.go('shoot!')
+        assert_equal(room, Map::DEATH)
+
+        room = Map::LASER_WEAPON_ARMORY
+        room = room.go('*')
+        assert_equal(room, Map::DEATH)
     end
 end
